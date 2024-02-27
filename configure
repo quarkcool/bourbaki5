@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+DIRS=src
+NAMESPACE_src=Bourbaki
+source coqproject/coqproject.sh

@@ -1,0 +1,38 @@
+{
+    "files.exclude": {
+        "**/*.vo": true,
+        "**/*.vok": true,
+        "**/*.vos": true,
+        "**/*.aux": true,
+        "**/*.glob": true,
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/*.cmi": true,
+        "**/*.cmo": true,
+        ".coqdeps.d": true,
+        ".CoqMakefile.d": true,
+        "_CoqProject": true,
+        "CoqMakefile": true,
+        "CoqMakefile.conf": true,
+        "default-mappings.json": true,
+        "**/*.v.timing": true
+    },
+    "search.exclude": {
+        ".coqdeps.d": true,
+        ".CoqMakefile.d": true,
+        "_CoqProject": true,
+        "CoqMakefile": true,
+        "CoqMakefile.conf": true,
+        "default-mappings.json": true,
+        "**/*.aux": true,
+        "**/*.glob": true,
+        "**/*.vo": true,
+        "**/*.vok": true,
+        "**/*.vos": true,
+        "**/*.v.timing": true
+    }
+}

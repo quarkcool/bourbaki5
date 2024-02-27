@@ -1,0 +1,12 @@
+.coqdeps.d
+.CoqMakefile.d
+_CoqProject
+CoqMakefile
+CoqMakefile.conf
+default-mappings.json
+*.aux
+*.glob
+*.vo
+*.vok
+*.vos
+*.v.timing

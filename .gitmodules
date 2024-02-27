@@ -1,0 +1,3 @@
+[submodule "coqproject"]
+	path = coqproject
+	url = https://github.com/DistributedComponents/coqproject.git
