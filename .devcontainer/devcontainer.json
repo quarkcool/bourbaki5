@@ -1,0 +1,14 @@
+{
+	"features": {
+		"ghcr.io/quarkcool/coq-lsp-dev-container-feature/coq-lsp:latest": {}
+	},
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"editor.wordWrap": "wordWrapColumn",
+				"editor.wordWrapColumn": 80,
+				"editor.trimAutoWhitespace": true
+			}
+		}
+	}
+}
