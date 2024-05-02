@@ -1,8 +1,7 @@
 Require Export
-  Bourbaki.Formal.Results.Meta.Implication
+  Bourbaki.Formal.Results.Meta.Proof
   Bourbaki.Logic.CoreTheory
-  Bourbaki.Meta.Tactic.Assumption
-  Bourbaki.Meta.Tactic.Intros.
+  Coq.Setoids.Setoid.
 
 Section Implication.
   Context `{Logic.CoreTheory}.
@@ -32,5 +31,37 @@ Section Implication.
       | 1.
   Proof.
     assert apply_subrelation by split; typeclasses_eauto.
+  Defined.
+
+  (* C6 *)
+  Theorem transitivity {𝐀 𝐁 𝐂} :
+    ⊢ 𝐀 ⇒ 𝐁 -> ⊢ 𝐁 ⇒ 𝐂 -> ⊢ 𝐀 ⇒ 𝐂.
+  Proof.
+    Intros H₁ H₂.
+    Rewrite <- H₂.
+    Assumption.
+  Defined.
+
+  #[export]
+  Instance :
+    CRelationClasses.Transitive ImplicationMetaRelation.
+  Proof.
+    Apply @Implication.transitivity.
+  Defined.
+
+  (* C8 *)
+  Theorem reflexivity 𝐀 :
+    ⊢ 𝐀 ⇒ 𝐀.
+  Proof.
+    Transitivity.
+    { Apply (Logic.disjunction_introduction_left _ 𝐀). }
+    { Apply Logic.disjunction_idempotence. }
+  Defined.
+
+  #[export]
+  Instance :
+    CRelationClasses.Reflexive ImplicationMetaRelation.
+  Proof.
+    Apply Implication.reflexivity.
   Defined.
 End Implication.
