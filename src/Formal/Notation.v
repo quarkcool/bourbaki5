@@ -1,3 +1,5 @@
+Reserved Infix "∪" (at level 69, left associativity).
+
 Reserved Notation "¬ 𝐀" (at level 71, right associativity, format "¬ 𝐀").
 
 Reserved Infix "∨" (at level 72, left associativity).
