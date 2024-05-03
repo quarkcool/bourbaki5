@@ -1,0 +1,1 @@
+Reserved Infix "∧" (at level 72, left associativity).
