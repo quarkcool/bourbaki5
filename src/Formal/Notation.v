@@ -1,3 +1,5 @@
+Reserved Infix "∷" (at level 68, right associativity).
+
 Reserved Infix "∪" (at level 69, left associativity).
 
 Reserved Infix "\" (at level 69, left associativity).

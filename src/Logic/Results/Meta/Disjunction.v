@@ -39,6 +39,17 @@ Section Disjunction.
     assert apply_subrelation by split; typeclasses_eauto.
   Defined.
 
+  (* C18 *)
+  Theorem elimination {𝐀 𝐁 𝐂} :
+    ⊢ 𝐀 ∨ 𝐁 -> ⊢ 𝐀 ⇒ 𝐂 -> ⊢ 𝐁 ⇒ 𝐂 -> ⊢ 𝐂.
+  Proof.
+    Intros H₁ H₂ H₃.
+    Apply Logic.disjunction_idempotence.
+    Rewrite <- H₂ at 1.
+    Rewrite <- H₃.
+    Assumption.
+  Defined.
+
   (* C10 *)
   Theorem excluded_middle 𝐀 :
     ⊢ 𝐀 ∨ ¬𝐀.
