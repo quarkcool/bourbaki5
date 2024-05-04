@@ -1,0 +1,1 @@
+Reserved Notation "⊥" (at level 0, no associativity).
