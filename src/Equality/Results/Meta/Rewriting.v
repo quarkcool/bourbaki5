@@ -1,8 +1,25 @@
 Require Export
-  Bourbaki.Equality.Results.Meta.Equality.
+  Bourbaki.Equality.Relation.FunctionalRelation
+  Bourbaki.Equality.Results.Meta.Equality
+  Bourbaki.Quantification.Results.Meta.Rewriting.
 
 Section Rewriting.
   Context `(EqualitarianTheory).
+
+  #[export]
+  Instance :
+    CMorphisms.Proper
+      (
+        CMorphisms.pointwise_relation _ (EquivalenceMetaRelation 𝒯) ==>
+          EquivalenceMetaRelation 𝒯
+      )
+      AtMostOneExistence.at_most_one_existence
+    | 0.
+  Proof.
+    Intros 𝐑 𝐒 H₁.
+    unfold AtMostOneExistence.at_most_one_existence.
+    Rewrite H₁.
+  Defined.
 
   #[export]
   Instance :
@@ -60,7 +77,41 @@ Section Rewriting.
   Proof.
     Intros 𝐑 x y H₁ u v H₂.
     Rewrite H₂.
-    Apply (Rewriting.Proper_instance_2 (fun x => 𝐑 x v)).
+    Apply (Rewriting.Proper_instance_3 (fun x => 𝐑 x v)).
     Assumption.
+  Defined.
+
+  #[export]
+  Instance :
+    CMorphisms.Proper
+      (
+        CMorphisms.pointwise_relation _ (EquivalenceMetaRelation 𝒯) ==>
+          EquivalenceMetaRelation 𝒯
+      )
+      UniqueExistence.unique_existence
+    | 0.
+  Proof.
+    Intros 𝐑 𝐒 H₁.
+    unfold UniqueExistence.unique_existence.
+    Rewrite H₁.
+  Defined.
+End Rewriting.
+
+Section Rewriting.
+  Context `(EqualitarianTheory).
+
+  #[export]
+  Instance :
+    CMorphisms.Proper
+      (
+        CMorphisms.pointwise_relation _ (EquivalenceMetaRelation 𝒯) ==>
+          CRelationClasses.flip CRelationClasses.arrow
+      )
+      (FunctionalRelation 𝒯)
+    | 0.
+  Proof.
+    Intros 𝐑 𝐒 H₁ H₂ 𝒯' H₃.
+    Rewrite H₁.
+    Apply FunctionalRelation.functional_essence.
   Defined.
 End Rewriting.

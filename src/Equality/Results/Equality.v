@@ -1,6 +1,5 @@
 Require Export
-  Bourbaki.Equality.Results.Meta.Rewriting
-  Bourbaki.Logic.Results.Meta.Rewriting.
+  Bourbaki.Equality.Results.Meta.Rewriting.
 
 Import Proof.TheoryHidingNotation.
 
