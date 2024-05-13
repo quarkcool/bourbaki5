@@ -6,6 +6,17 @@ Import Proof.TheoryHidingNotation.
 Section Equality.
   Context `(EqualitarianTheory).
 
+  (* EX_I_5_1 *)
+  #[export]
+  Instance :
+    forall y, FunctionalRelation 𝒯 (fun x => x = y).
+  Proof.
+    Intros y 𝒯' H₁ [| x₁ H₂ x₂ H₃].
+    { Apply Equality.reflexivity. }
+    { Rewrite H₂.
+      Rewrite H₃. }
+  Defined.
+
   Theorem as_conditionₑ x y 𝐑 :
     𝒯 ⊢ x = y ⇒ 𝐑 x ⇔ x = y ⇒ 𝐑 y.
   Proof.
