@@ -142,6 +142,13 @@ Module Universality.
       Apply Universality.disjunct_extraction_left.
     Defined.
 
+    (* EX_I_4_1 *)
+    Theorem condition_extraction 𝐀 𝐑 :
+      𝒯 ⊢ (∀ x, 𝐀 ⇒ 𝐑 x) ⇔ 𝐀 ⇒ ∀ x, 𝐑 x.
+    Proof.
+      Apply Universality.disjunct_extraction_left.
+    Defined.
+
     Theorem consequence_extraction 𝐑 𝐀 :
       𝒯 ⊢ (∀ x, 𝐑 x ⇒ 𝐀) ⇔ (∃ x, 𝐑 x) ⇒ 𝐀.
     Proof.
