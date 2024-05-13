@@ -75,3 +75,19 @@ Module Implication.
     Defined.
   End Implication.
 End Implication.
+
+Module Equivalence.
+  Section Equivalence.
+    Context `(LogicalTheory).
+
+    Theorem fundamental_impossibility 𝐀 :
+      𝒯 ⊢ ¬(𝐀 ⇔ ¬𝐀).
+    Proof.
+      Apply Conjunction.negationₑ.
+      Rewrite Implication.negationₑ.
+      Rewrite Negation.double_removal.
+      Rewrite Conjunction.idempotence.
+      Apply Disjunction.excluded_middle.
+    Defined.
+  End Equivalence.
+End Equivalence.
