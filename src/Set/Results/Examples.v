@@ -1,25 +1,22 @@
 Require Export
-  Bourbaki.Logic.Results.Conjunction
-  Bourbaki.Quantification.Results.Meta.Rewriting
-  Bourbaki.Set.Results.Meta.Inclusion
-  Bourbaki.Set.Results.Theory.
+  Bourbaki.Set.Results.CollectivizingSet.
 
 Import Proof.TheoryHidingNotation.
 
 Section Examples.
-  Context `(SetTheory).
+  Context `(EqualitarianTheory, !Set_.Syntax).
 
-  Example PROP2 x y z :
-    𝒯 ⊢ x ⊂ y ∧ y ⊂ z ⇒ x ⊂ z.
+  Example C50_a
+    {𝐑 𝐒} `(!CollectivizingRelation 𝒯 𝐑) `(!CollectivizingRelation 𝒯 𝐒) :
+      𝒯 ⊢ (∀ x, 𝐑 x ⇒ 𝐒 x) ⇔ {x | 𝐑 x} ⊂ {x | 𝐒 x}.
   Proof.
-    Rewrite Conjunction.as_conditionₑ.
-    Apply Inclusion.transitivity.
+    Rewrite CollectivizingSet.inclusionₑ.
   Defined.
 
-  Example A1 :
-    𝒯 ⊢ ∀ x y, x ⊂ y ∧ y ⊂ x ⇒ x = y.
+  Example C50_b
+    {𝐑 𝐒} `(!CollectivizingRelation 𝒯 𝐑) `(!CollectivizingRelation 𝒯 𝐒) :
+      𝒯 ⊢ (∀ x, 𝐑 x ⇔ 𝐒 x) ⇔ {x | 𝐑 x} = {x | 𝐒 x}.
   Proof.
-    Rewrite Conjunction.as_conditionₑ.
-    Apply Set_.extensionality.
+    Rewrite CollectivizingSet.equalityₑ.
   Defined.
 End Examples.
