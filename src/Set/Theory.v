@@ -1,5 +1,6 @@
 Require Export
   Bourbaki.Equality.Theory
+  Bourbaki.Set.Relation.CollectivizingRelation
   Bourbaki.Set.Relation.Inclusion.
 
 Module Set_.
@@ -9,7 +10,8 @@ Module Set_.
     Canonical Theory :=
     {|
       Theory.explicit_axioms := [
-        ∀ x y, x ⊂ y ⇒ y ⊂ x ⇒ x = y
+        ∀ x y, x ⊂ y ⇒ y ⊂ x ⇒ x = y;
+        ∀ x y, Coll (fun z => z = x ∨ z = y)
       ];
       Theory.Schemas := fun _ => False
     |}.

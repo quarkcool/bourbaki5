@@ -1,7 +1,6 @@
 Require Export
   Bourbaki.Equality.Relation.SingleValuedRelation
   Bourbaki.Equality.Results.Theory
-  Bourbaki.Set.Relation.CollectivizingRelation
   Bourbaki.Set.Relation.NonMembership
   Bourbaki.Set.Results.Equality.
 
