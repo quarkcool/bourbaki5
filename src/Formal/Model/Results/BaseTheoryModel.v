@@ -19,8 +19,7 @@ Section Model.
   Defined.
   Canonical Th.
 
-  #[local]
-  Definition entailment_false_helper {𝐀} (H₁ : 𝒯 ⊢ 𝐀) :
+  Let entailment_false_helper {𝐀} (H₁ : 𝒯 ⊢ 𝐀) :
     ⊢ 𝐀 :=
   Eval simpl in
   ltac2:(
@@ -54,3 +53,28 @@ Hint Resolve entailment_false | 5 : entailment_instances.
 Hint Extern 1 (Entailment true _ _) =>
   simple notypeclasses refine (entailment_true _) :
 entailment_instances.
+
+Ltac solve_entailment_true_constraint :=
+lazy -[
+  Set_.difference
+  Set_.empty_set
+  Set_.Inclusion
+  Set_.singleton
+  Set_.union
+];
+rewrite_strat (
+  topdown (
+    choice
+      Set_.union_with_empty_set_left
+      (choice
+        Set_.union_with_empty_set_right
+        (choice
+          Set_.difference_of_operand_from_union_right
+          Set_.difference_of_set_from_itself))
+  );
+  refl
+).
+
+(*Hint Extern 0 (AdjoinedAxioms _ ⊂ _) =>
+   :
+typeclass_instances.*)

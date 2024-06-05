@@ -2,7 +2,7 @@ Require Export
   Bourbaki.Formal.Model.Meta.AxiomlessTheory
   Bourbaki.Logic.Model.Results.BaseTheoryModel
   Bourbaki.Logic.Results.Meta.ListConjunction
-  Bourbaki.Truth.Model.Theory.
+  Bourbaki.Truth.Model.Results.BaseTheoryModel.
 
 Section AxiomlessTheory.
   Context `{TruthTheory, !LogicalTheory 𝒯, !TruthTheory (AxiomlessTheory 𝒯)}.
@@ -28,15 +28,16 @@ Section AxiomlessTheory.
           Assumption. }
         { Intros H₂.
           Apply H₂.
-          cbv -[Set_.union_with_difference_left].
-          Change (_ ∪ (_ ∪ _ \ _) ⊂ _).
-          (*Arguments entails : clear implicits.*)
-          Qed. } }
+
+          (*ltac1:(solve_entailment_true_constraint).
+          Reflexivity.*)
+          (*Assumption.*) } }
       { exists [].
         split.
         { Intros 𝐁 []. }
         { Intros _.
           Apply Proof.implicit_axiom.
+          right.
           Assumption. } }
       { exists ((𝐀s₁ ++ 𝐀s₂)%list).
         split.
@@ -45,9 +46,10 @@ Section AxiomlessTheory.
             plus [Apply IH₁ | Apply IH₃];
             Assumption. }
         { Intros H₁.
-          Apply IH₄.
-          { Apply ListConjunction.concatenation_elimination.
-            Assumption. }
+          Apply IH₄; simpl.
+          { Simple Apply ListConjunction.concatenation_elimination.
+            2: Assumption.
+            { Show. }
           { Apply IH₂.
             Apply ListConjunction.concatenation_elimination;
             Assumption. } } } }
