@@ -11,3 +11,7 @@ Reserved Infix "∨" (at level 102, right associativity).
 Reserved Infix "⇒" (at level 103, right associativity).
 
 Reserved Notation "'τ' x , 𝐑" (at level 105, no associativity).
+
+Reserved Notation "⊢ 𝐀" (at level 106, no associativity).
+
+Reserved Infix "⊢⇒" (at level 106, no associativity).
