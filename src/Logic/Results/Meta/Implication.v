@@ -57,6 +57,15 @@ Module Implication.
     Proof.
       Apply Implication.reflexivity.
     Qed.
+
+    Fact introduction_pattern 𝐀 𝐁 :
+      IntroductionPattern simple_pattern (⊢ 𝐀 ⇒ 𝐁).
+    Proof.
+      esplit.
+      Apply Logic.deduction.
+    Defined.
   End Implication.
+
+  Hint Resolve introduction_pattern | 0 : introduction_pattern_instances.
 End Implication.
 Export (hints) Implication.

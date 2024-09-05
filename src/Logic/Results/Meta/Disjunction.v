@@ -38,6 +38,28 @@ Module Disjunction.
       repeat split.
     Defined.
 
+    (* C18 *)
+    Theorem elimination {𝐀 𝐁 𝐂} :
+      (⊢ 𝐀 ∨ 𝐁) -> (⊢ 𝐀 ⇒ 𝐂) -> (⊢ 𝐁 ⇒ 𝐂) -> ⊢ 𝐂.
+    Proof.
+      Intros H₁ H₂ H₃.
+      Apply Logic.disjunction_idempotence.
+      Rewrite <- H₂ at 1.
+      Rewrite <- H₃.
+      Assumption.
+    Qed.
+
+    Fact destruction_pattern 𝐀 𝐁 𝐂 :
+      IntroductionPattern complex_pattern (⊢ 𝐀 ∨ 𝐁 ⇒ 𝐂).
+    Proof.
+      esplit with (NewGoals := (_ * _)%type).
+      Intros [H₁ H₂] H₃.
+      Apply Disjunction.elimination.
+      { Assumption. }
+      { Apply H₁. }
+      { Assumption. }
+    Defined.
+
     Fact entailment_left
       {T 𝐀 𝐁} {x : T} `(NotEvar _ 𝐀) `(Entailment _ true x (⊢ 𝐀)) :
         Entailment true x (⊢ 𝐀 ∨ 𝐁).
@@ -70,5 +92,7 @@ Module Disjunction.
   Hint Resolve entailment_left | 1 : entailment_instances.
 
   Hint Resolve entailment_right | 1 : entailment_instances.
+
+  Hint Resolve destruction_pattern | 0 : introduction_pattern_instances.
 End Disjunction.
 Export (hints) Disjunction.

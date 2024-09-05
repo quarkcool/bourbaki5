@@ -14,6 +14,9 @@ Module Logic.
       forall 𝐀 𝐁, ⊢ 𝐀 ∨ 𝐁 ⇒ 𝐁 ∨ 𝐀;
     (* S4 *)
     disjunction_rewriting_right :
-      forall 𝐁 𝐂 𝐀, ⊢ (𝐁 ⇒ 𝐂) ⇒ 𝐀 ∨ 𝐁 ⇒ 𝐀 ∨ 𝐂
+      forall 𝐁 𝐂 𝐀, ⊢ (𝐁 ⇒ 𝐂) ⇒ 𝐀 ∨ 𝐁 ⇒ 𝐀 ∨ 𝐂;
+
+    deduction :
+      forall {𝐀 𝐁}, ((⊢ 𝐀) -> ⊢ 𝐁) -> ⊢ 𝐀 ⇒ 𝐁
   }.
 End Logic.
