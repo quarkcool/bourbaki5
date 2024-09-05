@@ -27,6 +27,14 @@ Module Logic.
       { Apply Logic.Truth.truth_truth. }
       { Assumption. }
     Defined.
+
+    (* C10 *)
+    Theorem excluded_middle 𝐀 :
+      ⊢ 𝐀 ∨ ¬𝐀.
+    Proof.
+      Apply Logic.disjunction_symmetry.
+      Apply Implication.reflexivity.
+    Qed.
   End Logic.
 End Logic.
 Export (hints) Logic.
