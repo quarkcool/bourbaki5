@@ -1,6 +1,7 @@
 Require Export
   Bourbaki.Formal.Results.Meta.Implication
-  Bourbaki.Logic.Theory.
+  Bourbaki.Logic.Theory
+  Coq.Setoids.Setoid.
 
 Section Implication.
   Context `{Logic.Theory}.
@@ -16,5 +17,37 @@ Section Implication.
     Intros 𝐑 𝐓 𝐒 H₁; unfold Basics.flip in *.
     Apply Logic.disjunction_rewriting_right.
     Assumption.
+  Qed.
+
+  (* C6 *)
+  Theorem transitivity {𝐑 𝐒 𝐓} :
+    (⊢ 𝐑 ⇒ 𝐒) -> (⊢ 𝐒 ⇒ 𝐓) -> ⊢ 𝐑 ⇒ 𝐓.
+  Proof.
+    Intros H₁ H₂.
+    Rewrite <- H₂.
+    Assumption.
+  Qed.
+
+  #[export]
+  Instance :
+    Transitive ImplicationProof.
+  Proof.
+    Apply @Implication.transitivity.
+  Qed.
+
+  (* C8 *)
+  Theorem reflexivity 𝐑 :
+    ⊢ 𝐑 ⇒ 𝐑.
+  Proof.
+    Transitivity.
+    { Apply (Logic.disjunction_introduction_left _ 𝐑). }
+    { Apply Logic.disjunction_idempotence. }
+  Qed.
+
+  #[export]
+  Instance :
+    Reflexive ImplicationProof.
+  Proof.
+    Apply Implication.reflexivity.
   Qed.
 End Implication.

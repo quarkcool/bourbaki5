@@ -22,4 +22,12 @@ Section Logic.
     esplit.
     Apply Logic.ex_falso_quodlibet.
   Defined.
+
+  (* C10 *)
+  Theorem excluded_middle 𝐑 :
+    ⊢ 𝐑 ∨ ¬𝐑.
+  Proof.
+    Apply Logic.disjunction_symmetry.
+    Apply Implication.reflexivity.
+  Qed.
 End Logic.
