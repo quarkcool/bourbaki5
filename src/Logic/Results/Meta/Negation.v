@@ -30,4 +30,13 @@ Section Negation.
     Apply Negation.rewriting.
     Assumption.
   Qed.
+
+  (* C16 *)
+  Theorem doubling 𝐑 :
+    ⊢ ¬¬𝐑 ⇒ 𝐑.
+  Proof.
+    Intros H₁ ?contra₁.
+    repeat esplit;
+      Assumption.
+  Qed.
 End Negation.

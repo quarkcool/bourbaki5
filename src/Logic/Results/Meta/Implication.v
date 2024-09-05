@@ -50,4 +50,13 @@ Section Implication.
   Proof.
     Apply Implication.reflexivity.
   Qed.
+
+  Fact introduction_pattern 𝐑 𝐒 :
+    IntroductionPattern simple_pattern (⊢ 𝐑 ⇒ 𝐒).
+  Proof.
+    esplit.
+    Apply Logic.deduction.
+  Defined.
 End Implication.
+
+Hint Resolve introduction_pattern | 0 : introduction_pattern_instances.
