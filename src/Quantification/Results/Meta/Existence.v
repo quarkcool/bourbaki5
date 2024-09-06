@@ -59,5 +59,41 @@ Module Existence.
   Hint Resolve entailment | 2 : entailment_instances.
 
   Hint Resolve destruction_pattern | 0 : introduction_pattern_instances.
+
+  Section Existence.
+    Context `{Logic.Truth.Theory, !Logic.Theory, !Quantification.Theory}.
+
+    (* C31_ii *)
+    #[export]
+    Instance :
+      Morphisms.Proper
+        (pointwise_relation _ ImplicationProof ==> ImplicationProof)
+        existence
+    | 0.
+    Proof.
+      Intros 𝐑 𝐒 H₁ [x H₂].
+      Apply H₁; Assumption.
+    Qed.
+
+    #[export]
+    Instance :
+      Morphisms.Proper
+        (pointwise_relation _ ImplicationProof --> Basics.flip ImplicationProof)
+        existence
+    | 0 := ltac2:(flip_morphism ()).
+
+    (* C31_iv *)
+    #[export]
+    Instance :
+      Morphisms.Proper
+        (pointwise_relation _ EquivalenceProof ==> EquivalenceProof)
+        existence
+    | 1.
+    Proof.
+      Intros 𝐑 𝐒 H₁ [|].
+      { Rewrite <- H₁. }
+      { Rewrite H₁. }
+    Qed.
+  End Existence.
 End Existence.
 Export (hints) Existence.
