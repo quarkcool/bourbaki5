@@ -1,5 +1,6 @@
 Require Export
-  Bourbaki.Logic.Results.Meta.Logic.
+  Bourbaki.Logic.Relation.Equivalence
+  Bourbaki.Logic.Results.Meta.Conjunction.
 
 Section Implication.
   Context `{Logic.Theory}.
@@ -13,6 +14,15 @@ Section Implication.
     { Apply H₂. }
     { Apply H₁.
       Assumption. }
+  Qed.
+
+  (* C24_ii *)
+  Theorem contrapositiveₑ 𝐑 𝐒 :
+    ⊢ 𝐑 ⇒ 𝐒 ⇔ ¬𝐒 ⇒ ¬𝐑.
+  Proof.
+    Intros [|].
+    { Apply Negation.rewriting. }
+    { Apply Implication.contrapositive. }
   Qed.
 
   (* C9 *)
