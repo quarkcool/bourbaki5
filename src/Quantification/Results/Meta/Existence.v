@@ -1,6 +1,5 @@
 Require Export
-  Bourbaki.Logic.EquivalenceProof
-  Bourbaki.Logic.Results.Meta.Conjunction
+  Bourbaki.Logic.Results.Meta.All
   Bourbaki.Quantification.Theory.
 
 Section Existence.
@@ -54,3 +53,32 @@ End Existence.
 Hint Resolve entailment | 2 : entailment_instances.
 
 Hint Resolve destruction_pattern | 0 : introduction_pattern_instances.
+
+Section Existence.
+  Context `{Quantification.Theory}.
+
+  (* C31_ii *)
+  #[export]
+  Instance :
+    Morphisms.Proper
+      (pointwise_relation _ ImplicationProof ==> ImplicationProof)
+      existence
+  | 0.
+  Proof.
+    Intros 𝐑 𝐒 H₁ [x H₂].
+    Apply H₁; Assumption.
+  Qed.
+
+  (* C31_iv *)
+  #[export]
+  Instance :
+    Morphisms.Proper
+      (pointwise_relation _ EquivalenceProof ==> EquivalenceProof)
+      existence
+  | 1.
+  Proof.
+    Intros 𝐑 𝐒 H₁ [|].
+    { Rewrite H₁. }
+    { Rewrite <- H₁. }
+  Qed.
+End Existence.
