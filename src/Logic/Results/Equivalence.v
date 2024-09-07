@@ -19,4 +19,15 @@ Section Equivalence.
     1-2: Apply Negation.rewriting; Assumption.
     all: Apply Implication.contrapositive; Assumption.
   Qed.
+
+  (* Ex_E_I_3__2 *)
+  Theorem impossibility 𝐀 :
+    ⊢ ¬(𝐀 ⇔ ¬𝐀).
+  Proof.
+    unfold Equivalence.equivalence, implication.
+    Rewrite (Negation.double_removalₑ 𝐀).
+    Rewrite Disjunction.idempotenceₑ.
+    Rewrite Conjunction.commutativity.
+    Apply Conjunction.impossibility.
+  Qed.
 End Equivalence.
