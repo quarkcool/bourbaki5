@@ -119,6 +119,7 @@ Module Universality.
       Rewrite Negation.double_removalₑ.
     Qed.
 
+    (* Ex_E_I_4__1 *)
     Theorem condition_extraction 𝐀 𝐑 :
       ⊢ (∀ x, 𝐀 ⇒ 𝐑 x) ⇔ 𝐀 ⇒ ∀ x, 𝐑 x.
     Proof.
@@ -241,6 +242,118 @@ Module Other.
       Intros [x H₁] y H₂ [[|]];
         Apply H₁;
         Assumption.
+    Qed.
+
+    Lemma Ex_E_I_4__2 {𝐁 𝐀} :
+      (forall x, ⊢ 𝐁 x ⇒ 𝐀) -> ⊢ (∃ x, 𝐁 x) ⇒ 𝐀.
+    Proof.
+      Intros H₁ [x H₂].
+      Apply H₁.
+      Assumption.
+    Qed.
+
+    Lemma Ex_E_I_4__3_i 𝐀 :
+      ⊢ (∀ x y, 𝐀 x y) ⇒ ∀ x, 𝐀 x x.
+    Proof.
+      Intros H₁ x.
+      Assumption.
+    Qed.
+
+    Lemma Ex_E_I_4__3_ii 𝐀 :
+      ⊢ (∃ x, 𝐀 x x) ⇒ ∃ x y, 𝐀 x y.
+    Proof.
+      Intros [x H₁].
+      Assumption.
+    Qed.
+
+    Lemma Ex_E_I_4__4_ii 𝐀 𝐁 :
+      ⊢ (∃ x, 𝐀 x) ∧ (∀ x, 𝐁 x) ⇒ ∃ x, 𝐀 x ∧ 𝐁 x.
+    Proof.
+      Intros [[x H₁] H₂] [[|]];
+        Assumption.
+    Qed.
+
+    Lemma Ex_E_I_4__4_i 𝐀 𝐁 :
+      ⊢ (∀ x, 𝐀 x ∨ 𝐁 x) ⇒ (∀ x, 𝐀 x) ∨ ∃ x, 𝐁 x.
+    Proof.
+      Apply Implication.contrapositiveₑ.
+      Rewrite Disjunction.negationₑ.
+      Rewrite Universality.negationₑ.
+      Rewrite Existence.negationₑ.
+      Rewrite (fun _ => Disjunction.negationₑ (𝐀 _)).
+      Apply Other.Ex_E_I_4__4_ii.
+    Qed.
+
+    Lemma Ex_E_I_4__5 𝐀 𝐁 :
+      ⊢ (∀ x y, 𝐀 x ∧ 𝐁 y) ⇔ (∀ x, 𝐀 x) ∧ ∀ x, 𝐁 x.
+    Proof.
+      do 2 (Rewrite Universality.split).
+      Rewrite Universality.removal.
+    Qed.
+
+    Lemma Ex_E_I_4__6_i 𝐀 𝐑 :
+      ⊢ (∃ x ⟨𝐀⟩, 𝐑 x) ⇒ ∃ x, 𝐑 x.
+    Proof.
+      Intros [x H₁].
+      Assumption.
+    Qed.
+
+    Lemma Ex_E_I_4__6_ii 𝐑 𝐀 :
+      ⊢ (∀ x, 𝐑 x) ⇒ ∀ x ⟨𝐀⟩, 𝐑 x.
+    Proof.
+      Intros H₁ x _.
+      Assumption.
+    Qed.
+
+    Lemma Ex_E_I_4__7_i {𝐑 𝐀} :
+      (forall x, ⊢ 𝐑 x ⇒ 𝐀 x) -> ⊢ (∃ x, 𝐑 x) ⇔ ∃ x ⟨𝐀⟩, 𝐑 x.
+    Proof.
+      Intros H₁.
+      unfold typical_existence.
+      Rewrite (fun _ => Conjunction.operand_removal_left _ (𝐀 _)).
+      Assumption.
+    Qed.
+
+    Lemma Ex_E_I_4__7_ii {𝐑 𝐀} :
+      (forall x, ⊢ ¬𝐑 x ⇒ 𝐀 x) -> ⊢ (∀ x, 𝐑 x) ⇔ ∀ x ⟨𝐀⟩, 𝐑 x.
+    Proof.
+      Intros H₁.
+      unfold typical_universality.
+      Rewrite Implication.with_true_condition.
+      Assumption.
+    Qed.
+
+    Lemma Ex_E_I_4__7_iii {𝐀} 𝐑 :
+      (forall x, ⊢ 𝐀 x) -> ⊢ (∃ x, 𝐑 x) ⇔ ∃ x ⟨𝐀⟩, 𝐑 x.
+    Proof.
+      Intros H₁.
+      Apply Other.Ex_E_I_4__7_i.
+      Intros x _.
+      Assumption.
+    Qed.
+
+    Lemma Ex_E_I_4__7_iv {𝐀} 𝐑 :
+      (forall x, ⊢ 𝐀 x) -> ⊢ (∀ x, 𝐑 x) ⇔ ∀ x ⟨𝐀⟩, 𝐑 x.
+    Proof.
+      Intros H₁.
+      Apply Other.Ex_E_I_4__7_ii.
+      Intros x _.
+      Assumption.
+    Qed.
+
+    Lemma Ex_E_I_4__8_i {𝐀} 𝐑 T :
+      (⊢ 𝐀 T) -> ⊢ 𝐑 T ⇒ ∃ x ⟨𝐀⟩, 𝐑 x.
+    Proof.
+      Intros H₁ H₂ [[|]];
+        Assumption.
+    Qed.
+
+    Lemma Ex_E_I_4__8_ii {𝐀} 𝐑 T :
+      (⊢ 𝐀 T) -> ⊢ (∀ x ⟨𝐀⟩, 𝐑 x) ⇒ 𝐑 T.
+    Proof.
+      Intros H₁ H₂.
+      Apply H₂.
+      Assumption.
     Qed.
   End Other.
 End Other.
