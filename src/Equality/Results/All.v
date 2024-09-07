@@ -1,5 +1,6 @@
 Require Export
   Bourbaki.Equality.Results.Equality
+  Bourbaki.Equality.Results.FunctionalEssence
   Bourbaki.Quantification.Results.All.
 
 Module Existence.
@@ -77,6 +78,13 @@ Module Other.
     Proof.
       Rewrite Conjunction.as_conditionₑ.
       Apply Equality.transitivity.
+    Qed.
+
+    Lemma C47 {𝐑} 𝐒 `(!IsFunctional 𝐑) :
+      ⊢ 𝐒 (τ x, 𝐑 x) ⇔ ∃ x, 𝐑 x ∧ 𝐒 x.
+    Proof.
+      Rewrite (FunctionalEssence.common_term (𝐑 := 𝐑)) at 2.
+      Rewrite Existence.of_equalₑ.
     Qed.
   End Other.
 End Other.
