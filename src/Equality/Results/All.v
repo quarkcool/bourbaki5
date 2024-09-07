@@ -7,6 +7,7 @@ Module Existence.
   Section Existence.
     Context `{Equality.Theory}.
 
+    (* Ex_E_I_5__2 *)
     Theorem of_equalₑ 𝐑 :
       ⊢ ∀ y, (∃ x ⟨= y⟩, 𝐑 x) ⇔ 𝐑 y.
     Proof.
@@ -85,6 +86,34 @@ Module Other.
     Proof.
       Rewrite (FunctionalEssence.common_term (𝐑 := 𝐑)) at 2.
       Rewrite Existence.of_equalₑ.
+    Qed.
+
+    Lemma Ex_E_I_5__3 {𝐒 : Term -> _} {𝐑 T} :
+      (forall y, (⊢ 𝐒 y) -> IsFunctional (fun x => 𝐑 x y)) -> (⊢ 𝐒 T) ->
+        IsFunctional (fun x => 𝐑 x T).
+    Proof.
+      Intros H₁.
+      Assumption.
+    Qed.
+
+    Lemma Ex_E_I_5__5_i {𝐑} 𝐒 `(!IsFunctional 𝐑) :
+      ⊢ ¬(∃ x, 𝐑 x ∧ 𝐒 x) ⇔ ∃ x, 𝐑 x ∧ ¬𝐒 x.
+    Proof.
+      Rewrite (FunctionalEssence.common_term (𝐑 := 𝐑)).
+      Rewrite Existence.of_equalₑ.
+    Qed.
+
+    Lemma Ex_E_I_5__5_ii {𝐑} 𝐒 𝐓 `(!IsFunctional 𝐑) :
+      ⊢ (∃ x, 𝐑 x ∧ 𝐒 x ∧ 𝐓 x) ⇔ (∃ x, 𝐑 x ∧ 𝐒 x) ∧ ∃ x, 𝐑 x ∧ 𝐓 x.
+    Proof.
+      Rewrite (FunctionalEssence.common_term (𝐑 := 𝐑)).
+      Rewrite Existence.of_equalₑ.
+    Qed.
+
+    Lemma Ex_E_I_5__5_iii 𝐑 𝐒 𝐓 :
+      ⊢ (∃ x, 𝐑 x ∧ 𝐒 x ∨ 𝐓 x) ⇔ (∃ x, 𝐑 x ∧ 𝐒 x) ∨ ∃ x, 𝐑 x ∧ 𝐓 x.
+    Proof.
+      Apply TypicalExistence.split.
     Qed.
   End Other.
 End Other.
