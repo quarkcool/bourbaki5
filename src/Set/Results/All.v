@@ -1,12 +1,10 @@
 Require Export
-  Bourbaki.Logic.Results.All
   Bourbaki.Set.Relation.NonMembership
-  Bourbaki.Set.Results.CollectivizingSet
-  Bourbaki.Set.Results.Meta.Inclusion.
+  Bourbaki.Set.Results.CollectivizingEssence.
 
 Module Other.
   Section Other.
-    Context `{Equality.Theory, !Set_.Syntax}.
+    Context `{Set_.Theory}.
 
     Lemma Pr_E_II_1__2 :
       ⊢ ∀ x y z, x ⊂ y ∧ y ⊂ z ⇒ x ⊂ z.
@@ -33,6 +31,16 @@ Module Other.
       ⊢ (∀ x, 𝐑 x ⇔ 𝐒 x) ⇔ {x | 𝐑 x} = {x | 𝐒 x}.
     Proof.
       Rewrite CollectivizingSet.equalityₑ.
+    Qed.
+
+    Lemma Rem_E_II_1__1 𝐒 {𝐑} `(!IsCollectivizing 𝐑) :
+      (⊢ ∀ x, 𝐒 x ⇒ 𝐑 x) -> IsCollectivizing 𝐒.
+    Proof.
+      Intros H₁.
+      Apply CollectivizingEssence.from_container_set.
+      Intros x.
+      Rewrite (MembershipEquivalenceProof.proof {x | 𝐑 x}).
+      Assumption.
     Qed.
   End Other.
 End Other.

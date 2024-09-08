@@ -3,6 +3,9 @@ Require Export
 
 Reserved Notation "{ x | 𝐑 }" (at level 0, x at level 99, no associativity).
 
+Reserved Notation "{ x ∈ X | 𝐑 }"
+  (at level 0, x at level 99, no associativity).
+
 Reserved Notation "{ x , y }" (at level 0, x at level 99, no associativity).
 
 Reserved Notation "{ x , }"

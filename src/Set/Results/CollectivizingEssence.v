@@ -1,6 +1,5 @@
 Require Export
-  Bourbaki.Equality.Relation.FunctionalEssence
-  Bourbaki.Set.Results.Set.
+  Bourbaki.Set.Results.CollectivizingSubset.
 
 Section CollectivizingEssence.
   Context `{Set_.Theory}.
@@ -21,6 +20,16 @@ Section CollectivizingEssence.
       IsFunctional (fun X => ∀ x, x ∈ X ⇔ 𝐑 x).
   Proof.
     Intros 𝐑 H₁ [|].
+    Assumption.
+  Qed.
+
+  (* C52 *)
+  Theorem from_container_set 𝐑 X :
+    (forall x, ⊢ 𝐑 x ⇒ x ∈ X) -> IsCollectivizing 𝐑.
+  Proof.
+    Intros H₁;
+      Change (IsCollectivizing (fun _ => _)).
+    Rewrite <- Conjunction.operand_removal_right.
     Assumption.
   Qed.
 End CollectivizingEssence.
