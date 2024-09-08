@@ -1,8 +1,11 @@
 Require Export
   Bourbaki.Equality.Theory
-  Bourbaki.Set.Syntax.
+  Bourbaki.Set.Relation.Inclusion.
 
 Module Set_.
-  #[warnings="-non-primitive-record"]
-  Class Theory `{Equality.Theory, !Set_.Syntax}.
+  Class Theory `{Equality.Theory, !Set_.Syntax} := {
+    (* A1 *)
+    extensionality :
+      ⊢ ∀ x y, x ⊂ y ⇒ y ⊂ x ⇒ x = y
+  }.
 End Set_.
