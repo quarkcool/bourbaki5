@@ -1,6 +1,5 @@
 Require Export
   Bourbaki.Equality.Relation.FunctionalEssence
-  Bourbaki.Set.Relation.CollectivizingEssence
   Bourbaki.Set.Results.Set.
 
 Section CollectivizingEssence.
