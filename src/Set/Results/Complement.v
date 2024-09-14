@@ -34,6 +34,22 @@ Section Complement.
       Rewrite H₁. }
   Qed.
 
+  (* Ex_E_II_1__3_ii *)
+  Theorem as_subsetₑ {x} a (b : Subset x) :
+    ⊢ ∁ x a ⊂ b ⇔ ∁ x b ⊂ a.
+  Proof.
+    Rewrite Complement.inclusionₑ at 1.
+    Rewrite Complement.double_removalₑ.
+  Qed.
+
+  (* Ex_E_II_1__3_i *)
+  Theorem as_supersetₑ {x} (a : Subset x) b :
+    ⊢ a ⊂ ∁ x b ⇔ b ⊂ ∁ x a.
+  Proof.
+    Rewrite Complement.inclusionₑ at 1.
+    Rewrite Complement.double_removalₑ.
+  Qed.
+
   Theorem of_set_relative_to_itself_emptiness :
     ⊢ ∀ x, is_empty (∁ x x).
   Proof.

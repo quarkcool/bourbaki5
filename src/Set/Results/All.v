@@ -50,6 +50,35 @@ Module NonEmptiness.
   End NonEmptiness.
 End NonEmptiness.
 
+Module Singleton.
+  Section Singleton.
+    Context `{Set_.Theory}.
+
+    (* Ex_E_II_1__4 *)
+    Theorem as_supersetₑ {X x} :
+      ⊢ X ⊂ {x,} ⇔ X = {x,} ∨ X = ∅.
+    Proof.
+      Rewrite Set_.equalityₑ₂ at 1.
+      Rewrite Singleton.as_subsetₑ.
+      Rewrite Disjunction.distributivity_over_conjunction_right.
+      Rewrite (Disjunction.operand_removal_right _ (_ ⊂ _)).
+      { Rewrite (Conjunction.operand_removal_right (_ ⊂ _)).
+        Rewrite (Disjunction.commutativity (_ ∈ _)).
+        Rewrite <- (Negation.as_conditionₑ (_ = _)).
+        Rewrite <- NonEmptiness.alternative_definition₂.
+        Intros H₁ [y H₂].
+        Rewrite <- (_ : y ⊢= x).
+        { Apply (MembershipEquivalenceProof.proof _ (fun y => y = x)).
+          Apply H₁.
+          Assumption. }
+        { Assumption. } }
+      { Intros H₁.
+        Rewrite H₁.
+        Apply EmptySet.subset_essence. }
+    Qed.
+  End Singleton.
+End Singleton.
+
 Module Other.
   Section Other.
     Context `{Set_.Theory}.
@@ -100,5 +129,59 @@ Module Other.
       Intros x _.
       Assumption.
     Qed.
+
+    Lemma Ex_E_II_1__1 x y :
+      ⊢ x = y ⇔ ∀ X, x ∈ X ⇒ y ∈ X.
+    Proof.
+      Intros [H₁ X | H₁].
+      { Rewrite H₁. }
+      { Symmetry.
+        Apply (MembershipEquivalenceProof.proof _ (fun y => y = x)).
+        Apply H₁.
+        Apply MembershipEquivalenceProof.proof.
+        Reflexivity. }
+    Qed.
+
+    Lemma Ex_E_II_1__2_i x :
+      ⊢ ∅ ≠ {x,}.
+    Proof.
+      Intros contra₁.
+      Apply EmptySet.emptiness; Change (⊢ _ ∈ _).
+      Rewrite contra₁.
+      Apply MembershipEquivalenceProof.proof.
+      Reflexivity.
+    Qed.
+
+    Lemma Ex_E_II_1__2_ii :
+      ⊢ ∃ x y, x ≠ y.
+    Proof.
+      Apply Other.Ex_E_II_1__2_i.
+      Apply Util.default.
+    Qed.
+
+    Lemma Ex_E_II_1__5 :
+      ⊢ ∅ = τ X, (τ x, x ∈ X) ∉ X.
+    Proof.
+      unfold empty_set;
+        Change (⊢ (τ X, _) = _).
+      Rewrite Universality.alternative_definition.
+      Rewrite Negation.double_removalₑ.
+    Qed.
   End Other.
+
+  Section Ex_E_II_1__6.
+    Context `{Equality.Theory, !Set_.Syntax}.
+    Context (A1' : ⊢ ∀ y, y = τ x, ∀ z, z ∈ x ⇔ z ∈ y).
+
+    Lemma Ex_E_II_1__6 :
+      ⊢ ∀ x y, x ⊂ y ⇒ y ⊂ x ⇒ x = y.
+    Proof.
+      Intros X Y H₁ H₂.
+      Rewrite A1'.
+      Rewrite (_ : ⊢ ∀ z, z ∈ X ⇔ z ∈ Y).
+      Apply Universality.split.
+      Intros [|];
+        Assumption.
+    Qed.
+  End Ex_E_II_1__6.
 End Other.
