@@ -2,6 +2,7 @@ Require Export
   Bourbaki.Equality.Relation.Inequality
   Bourbaki.Set.Relation.NonEmptiness
   Bourbaki.Set.Results.CollectivizingEssence
+  Bourbaki.Set.Results.CoupleCoordinates
   Bourbaki.Set.Results.EmptySet.
 
 Module Complement.
@@ -26,6 +27,76 @@ Module Complement.
     Qed.
   End Complement.
 End Complement.
+
+Module Couple.
+  Section Couple.
+    Context `{Set_.Theory}.
+
+    Theorem as_equalₑ :
+      ⊢ ∀ z x y, z = ❨x, y❩ ⇔ is_couple z ∧ x = pr₁ z ∧ y = pr₂ z.
+    Proof.
+      Intros z x y.
+      do 2 (Rewrite <- Existence.conjunct_extraction_right);
+        Change (⊢ _ ⇔ ∃ x' y', _).
+      Rewrite (
+        fun _ _ =>
+          Equality.as_conjunct_leftₑ _ _ (fun z => _ = pr₁ z ∧ y = pr₂ z)
+      ).
+      Rewrite CoupleCoordinates.of_couple₁.
+      Rewrite CoupleCoordinates.of_couple₂.
+      Rewrite Equality.commutativity at 3 4.
+      Rewrite (fun _ _ => Conjunction.commutativity (_ = _)).
+      Rewrite <- Conjunction.associativity.
+      Rewrite Existence.conjunct_extraction_left;
+        Change (⊢ _ ⇔ ∃ x', _ ∧ ∃ y', _).
+      do 2 (Rewrite Existence.of_equalₑ).
+    Qed.
+  End Couple.
+End Couple.
+
+Module CoupleEssence.
+  Section CoupleEssence.
+    Context `{Set_.Theory}.
+
+    Theorem alternative_definition :
+      ⊢ ∀ x, is_couple x ⇔ x = ❨pr₁ x, pr₂ x❩.
+    Proof.
+      Intros z [[x [y H₁]] | H₁ [[]]].
+      { Rewrite H₁.
+        Rewrite CoupleCoordinates.of_couple₁.
+        Rewrite CoupleCoordinates.of_couple₂. }
+      { Assumption. }
+    Qed.
+  End CoupleEssence.
+End CoupleEssence.
+
+Module Existence.
+  Section Existence.
+    Context `{Set_.Theory}.
+
+    Theorem of_equal_coupleₑ 𝐑 :
+      ⊢ ∀ z, (∃ x y, z = ❨x, y❩ ∧ 𝐑 x y) ⇔ is_couple z ∧ 𝐑 (pr₁ z) (pr₂ z).
+    Proof.
+      Intros z.
+      Rewrite Couple.as_equalₑ.
+      do 2 (Rewrite <- Conjunction.associativity).
+      do 3 (Rewrite Existence.conjunct_extraction_left);
+        Change (⊢ _ ∧ (∃ x, _ ∧ ∃ y, _) ⇔ _).
+      do 2 (Rewrite Existence.of_equalₑ).
+    Qed.
+
+    Theorem of_equal_coupleₑ₂ 𝐑 :
+      ⊢ ∀ x y, (∃ x' y', ❨x, y❩ = ❨x', y'❩ ∧ 𝐑 x' y') ⇔ 𝐑 x y.
+    Proof.
+      Intros x y.
+      Rewrite Existence.of_equal_coupleₑ.
+      Rewrite CoupleCoordinates.of_couple₁.
+      Rewrite CoupleCoordinates.of_couple₂.
+      Rewrite (Conjunction.operand_removal_left _ (is_couple _)).
+      Apply Couple.couple_essence.
+    Qed.
+  End Existence.
+End Existence.
 
 Module NonEmptiness.
   Section NonEmptiness.
@@ -78,6 +149,62 @@ Module Singleton.
     Qed.
   End Singleton.
 End Singleton.
+
+Module TypicalExistence.
+  Section TypicalExistence.
+    Context `{Set_.Theory}.
+
+    Theorem of_coupleₑ 𝐑 :
+      ⊢ (∃ z ⟨is_couple⟩, 𝐑 (pr₁ z) (pr₂ z)) ⇔ ∃ x y, 𝐑 x y.
+    Proof.
+      unfold typical_existence;
+        Change (⊢ (∃ z, _) ⇔ _).
+      Rewrite <- Existence.of_equal_coupleₑ.
+      Rewrite Existence.switch at 1; Rewrite Existence.switch at 2;
+        Change (⊢ (∃ x y z, _) ⇔ _).
+      Rewrite Existence.conjunct_extraction_right;
+        Change (⊢ (∃ x y, (∃ z, _) ∧ _) ⇔ _).
+      Rewrite (fun _ _ => Conjunction.operand_removal_left (𝐑 _ _)).
+      Apply Equality.reflexivity.
+    Qed.
+  End TypicalExistence.
+End TypicalExistence.
+
+Module Universality.
+  Section Universality.
+    Context `{Set_.Theory}.
+
+    Theorem over_equal_couplesₑ 𝐑 :
+      ⊢ ∀ z, (∀ x y, z = ❨x, y❩ ⇒ 𝐑 x y) ⇔ is_couple z ⇒ 𝐑 (pr₁ z) (pr₂ z).
+    Proof.
+      Intros z.
+      Rewrite Couple.as_equalₑ.
+      do 2 (Rewrite Conjunction.as_conditionₑ).
+      Rewrite Universality.condition_extraction;
+        Change (⊢ (∀ x, _ ⇒ ∀ y, _) ⇔ _).
+      do 2 (Rewrite TypicalUniversality.over_equalsₑ).
+    Qed.
+  End Universality.
+End Universality.
+
+Module TypicalUniversality.
+  Section TypicalUniversality.
+    Context `{Set_.Theory}.
+
+    Theorem over_couplesₑ 𝐑 :
+      ⊢ (∀ z ⟨is_couple⟩, 𝐑 (pr₁ z) (pr₂ z)) ⇔ ∀ x y, 𝐑 x y.
+    Proof.
+      Change (⊢ (∀ z, _) ⇔ _).
+      Rewrite <- Universality.over_equal_couplesₑ.
+      Rewrite Universality.switch at 1; Rewrite Universality.switch at 2;
+        Change (⊢ (∀ x y z, _) ⇔ _).
+      Rewrite Universality.consequence_extraction;
+        Change (⊢ (∀ x y, (∃ z, _) ⇒ _) ⇔ _).
+      Rewrite Implication.with_true_condition.
+      Apply Equality.reflexivity.
+    Qed.
+  End TypicalUniversality.
+End TypicalUniversality.
 
 Module Other.
   Section Other.

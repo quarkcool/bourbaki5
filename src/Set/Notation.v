@@ -13,6 +13,9 @@ Reserved Notation "{ x , y }" (at level 0, x at level 99, no associativity).
 Reserved Notation "{ x , }"
   (at level 0, x at level 99, no associativity, format "{ x , }").
 
+Reserved Notation "❨ x , y ❩"
+  (at level 0, x at level 99, no associativity, format "❨ x ,  y ❩").
+
 Reserved Notation "∁" (at level 0, no associativity).
 
 Reserved Infix "∈" (at level 100, no associativity).
