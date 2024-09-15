@@ -348,6 +348,18 @@ Module Other.
       Rewrite EmptySet.as_equalₑ.
       Apply Product.emptinessₑ.
     Qed.
+
+    Lemma Ex_E_II_2__1_i 𝐑 :
+      ⊢ (∃ x y, 𝐑 x y) ⇔ ∃ z, is_couple z ∧ 𝐑 (pr₁ z) (pr₂ z).
+    Proof.
+      Rewrite TypicalExistence.of_coupleₑ.
+    Qed.
+
+    Lemma Ex_E_II_2__1_ii 𝐑 :
+      ⊢ (∀ x y, 𝐑 x y) ⇔ ∀ z, is_couple z ⇒ 𝐑 (pr₁ z) (pr₂ z).
+    Proof.
+      Rewrite TypicalUniversality.over_couplesₑ.
+    Qed.
   End Other.
 
   Section Ex_E_II_1__6.
