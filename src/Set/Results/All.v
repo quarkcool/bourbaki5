@@ -139,32 +139,6 @@ Module Product.
       Intros [[z [x [y H₁]]] [|] | [[x H₁] [y H₂]] [[[[| [|]]]]]];
         first [Assumption | Reflexivity].
     Qed.
-
-    (* Pr_E_II_2__2 *)
-    Theorem inclusionₑ :
-      ⊢ ∀ X₁ Y₁ ⟨is_non_empty⟩, ∀ X₂ Y₂, X₁ × Y₁ ⊂ X₂ × Y₂ ⇔ X₁ ⊂ X₂ ∧ Y₁ ⊂ Y₂.
-    Proof.
-      Intros X₁ [x' H₁] Y₁ [y' H₂] X₂ Y₂.
-      Change (⊢ (∀ z, _) ⇔ _).
-      Rewrite MembershipEquivalenceProof.proof.
-      Rewrite Existence.of_equal_coupleₑ.
-      Intros [H₃ [x H₄ | y H₄] | H₃ z H₄ [| [|]]].
-      1-2:
-        plus [
-          Rewrite <- (⇑(⇑CoupleCoordinates.of_couple₁ _) y') at 1
-        |
-          Rewrite <- (⇑CoupleCoordinates.of_couple₂ x') at 1
-        ];
-        Apply H₃;
-        Intros [| [|]].
-      1,4: Apply Couple.couple_essence.
-      1,3: Rewrite CoupleCoordinates.of_couple₁; Assumption.
-      1-2: Rewrite CoupleCoordinates.of_couple₂; Assumption.
-      { Assumption. }
-      all:
-        Apply H₃;
-        Assumption.
-    Qed.
   End Product.
 End Product.
 
