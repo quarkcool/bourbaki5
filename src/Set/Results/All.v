@@ -3,7 +3,9 @@ Require Export
   Bourbaki.Set.Relation.NonEmptiness
   Bourbaki.Set.Results.CollectivizingEssence
   Bourbaki.Set.Results.CoupleCoordinates
-  Bourbaki.Set.Results.EmptySet.
+  Bourbaki.Set.Results.EmptySet
+  Bourbaki.Set.Results.Product
+  Bourbaki.Set.Term.Product.
 
 Module Complement.
   Section Complement.
@@ -120,6 +122,51 @@ Module NonEmptiness.
     Qed.
   End NonEmptiness.
 End NonEmptiness.
+
+Module Product.
+  Section Product.
+    Context `{Set_.Theory}.
+
+    Theorem emptinessₑ :
+      ⊢ ∀ X Y, is_empty (X × Y) ⇔ is_empty X ∨ is_empty Y.
+    Proof.
+      Intros X Y.
+      Apply Equivalence.contrapositiveₑ.
+      Rewrite (Disjunction.negationₑ (is_empty _)).
+      Rewrite <- NonEmptiness.alternative_definition.
+      Change (⊢ (∃ z, _) ⇔ _).
+      Rewrite MembershipEquivalenceProof.proof.
+      Intros [[z [x [y H₁]]] [|] | [[x H₁] [y H₂]] [[[[| [|]]]]]];
+        first [Assumption | Reflexivity].
+    Qed.
+
+    (* Pr_E_II_2__2 *)
+    Theorem inclusionₑ :
+      ⊢ ∀ X₁ Y₁ ⟨is_non_empty⟩, ∀ X₂ Y₂, X₁ × Y₁ ⊂ X₂ × Y₂ ⇔ X₁ ⊂ X₂ ∧ Y₁ ⊂ Y₂.
+    Proof.
+      Intros X₁ [x' H₁] Y₁ [y' H₂] X₂ Y₂.
+      Change (⊢ (∀ z, _) ⇔ _).
+      Rewrite MembershipEquivalenceProof.proof.
+      Rewrite Existence.of_equal_coupleₑ.
+      Intros [H₃ [x H₄ | y H₄] | H₃ z H₄ [| [|]]].
+      1-2:
+        plus [
+          Rewrite <- (⇑(⇑CoupleCoordinates.of_couple₁ _) y') at 1
+        |
+          Rewrite <- (⇑CoupleCoordinates.of_couple₂ x') at 1
+        ];
+        Apply H₃;
+        Intros [| [|]].
+      1,4: Apply Couple.couple_essence.
+      1,3: Rewrite CoupleCoordinates.of_couple₁; Assumption.
+      1-2: Rewrite CoupleCoordinates.of_couple₂; Assumption.
+      { Assumption. }
+      all:
+        Apply H₃;
+        Assumption.
+    Qed.
+  End Product.
+End Product.
 
 Module Singleton.
   Section Singleton.
@@ -293,6 +340,13 @@ Module Other.
         Change (⊢ (τ X, _) = _).
       Rewrite Universality.alternative_definition.
       Rewrite Negation.double_removalₑ.
+    Qed.
+
+    Lemma Pr_E_II_2__3 :
+      ⊢ ∀ A B, A × B = ∅ ⇔ A = ∅ ∨ B = ∅.
+    Proof.
+      Rewrite EmptySet.as_equalₑ.
+      Apply Product.emptinessₑ.
     Qed.
   End Other.
 

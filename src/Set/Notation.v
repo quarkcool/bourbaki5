@@ -18,6 +18,8 @@ Reserved Notation "❨ x , y ❩"
 
 Reserved Notation "∁" (at level 0, no associativity).
 
+Reserved Infix "×" (at level 69, left associativity).
+
 Reserved Infix "∈" (at level 100, no associativity).
 
 Reserved Notation "∈ x" (at level 100, no associativity).
