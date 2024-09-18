@@ -12,3 +12,5 @@ Reserved Notation "pr₁⟨ G ⟩" (at level 0, no associativity, format "pr₁�
 Reserved Notation "pr₂⟨ G ⟩" (at level 0, no associativity, format "pr₂⟨ G ⟩").
 
 Reserved Notation "G ⟨ X ⟩" (at level 1, no associativity, format "G ⟨ X ⟩").
+
+Reserved Notation "G ⁻¹" (at level 1, left associativity, format "G ⁻¹").

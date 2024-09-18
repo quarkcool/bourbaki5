@@ -1,6 +1,6 @@
 Require Export
-  Bourbaki.Correspondence.Results.Meta.Image
-  Bourbaki.Correspondence.Results.Meta.Product
+  Bourbaki.Correspondence.Results.Product
+  Bourbaki.Correspondence.Results.ReverseGraph
   Bourbaki.Set.Results.Meta.Emptiness.
 
 Module Graph.
@@ -25,6 +25,21 @@ Module Graph.
     Qed.
   End Graph.
 End Graph.
+
+Module Product.
+  Section Product.
+    Context `{Set_.Theory}.
+
+    Theorem reverseₑ :
+      ⊢ ∀ X Y, (X × Y)⁻¹ = Y × X.
+    Proof.
+      Rewrite Graph.equalityₑ.
+      Intros X Y y x.
+      do 2 (Rewrite CoupleMembershipEquivalenceProof.proof).
+      Apply Conjunction.commutativity.
+    Qed.
+  End Product.
+End Product.
 
 Module Other.
   Section Other.
