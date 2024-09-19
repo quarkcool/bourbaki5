@@ -1,7 +1,26 @@
 Require Export
+  Bourbaki.Correspondence.Relation.SymmetricGraphEssence
+  Bourbaki.Correspondence.Results.Diagonal
   Bourbaki.Correspondence.Results.Product
   Bourbaki.Correspondence.Results.ReverseGraph
   Bourbaki.Set.Results.Meta.Emptiness.
+
+Module Diagonal.
+  Section Diagonal.
+    Context `{Set_.Theory}.
+
+    Theorem symmetry :
+      ⊢ ∀ X, is_symmetric_graph (Δ X).
+    Proof.
+      Rewrite Graph.equalityₑ.
+      Intros X x y.
+      do 2 (Rewrite CoupleMembershipEquivalenceProof.proof).
+      Rewrite (fun x X => Conjunction.commutativity (x ∈ X)).
+      Rewrite Equality.commutativity at 1.
+      Apply (Equality.as_conjunct_leftₑ _ _ (fun y => y ∈ X)).
+    Qed.
+  End Diagonal.
+End Diagonal.
 
 Module Graph.
   Section Graph.
