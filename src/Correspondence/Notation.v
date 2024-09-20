@@ -16,3 +16,5 @@ Reserved Notation "G ⟨ X ⟩" (at level 1, no associativity, format "G ⟨ X �
 Reserved Notation "G ⁻¹" (at level 1, left associativity, format "G ⁻¹").
 
 Reserved Infix "∘" (at level 68, right associativity).
+
+Reserved Infix "→" (at level 70, right associativity).
