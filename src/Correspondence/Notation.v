@@ -7,6 +7,12 @@ Reserved Notation "{❨ x , y ❩ ∈ X | 𝐑 }"
     format "{❨ x ,  y ❩  ∈  X  |  𝐑 }"
   ).
 
+Reserved Notation "x ∈ X ↦ 𝐓"
+  (at level 100, X at next level, no associativity).
+
+Reserved Notation "x ∈ X ↦ 𝐓 ∈ Y"
+  (at level 100, X at next level, no associativity).
+
 Reserved Notation "pr₁⟨ G ⟩" (at level 0, no associativity, format "pr₁⟨ G ⟩").
 
 Reserved Notation "pr₂⟨ G ⟩" (at level 0, no associativity, format "pr₂⟨ G ⟩").

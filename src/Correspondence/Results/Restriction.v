@@ -1,21 +1,10 @@
 Require Export
   Bourbaki.Correspondence.Correspondence.Restriction
   Bourbaki.Correspondence.Relation.ExtensionEssence
-  Bourbaki.Correspondence.ValueEqualityProof.
+  Bourbaki.Correspondence.Results.TermFunction.
 
 Section Restriction.
   Context `{Set_.Theory}.
-
-  #[export]
-  Instance :
-    forall {X₁ Y X₂} (f : X₁ → Y) `(!X₂ ⊢⊂ X₁),
-      ValueEqualityProof (f ∥ X₂) (value f).
-  Proof.
-    Intros X₁ Y X₂ f H₁ x.
-    Apply Application.inclusionₑ.
-    { Apply RelationSubgraph.subset_essence. }
-    { Apply Element.membership. }
-  Qed.
 
   Theorem equalityₑ
     {X₁ Y₁ X₂ Y₂ X₃} (f : X₁ → Y₁) (g : X₂ → Y₂) `(!X₃ ⊢⊂ X₁) `(!X₃ ⊢⊂ X₂) :
@@ -34,7 +23,11 @@ Section Restriction.
     ⊢ is_extension (f ∥ X₂) f.
   Proof.
     Intros [|].
-    { Apply RelationSubgraph.subset_essence. }
+    { Apply Application.inclusionₑ.
+      Intros [| [[|] | x H₁]].
+      1,3: Assumption.
+      { Reflexivity. }
+      { Apply ValueEqualityProof.proof. } }
     { Reflexivity. }
   Qed.
 End Restriction.

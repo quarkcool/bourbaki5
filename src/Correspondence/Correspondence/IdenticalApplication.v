@@ -1,22 +1,21 @@
 Require Export
-  Bourbaki.Correspondence.Correspondence.IdenticalCorrespondence
-  Bourbaki.Correspondence.Term.Application.
+  Bourbaki.Correspondence.Correspondence.TermFunction.
 
 Section IdenticalApplication.
   Context `{Set_.Theory}.
 
   #[export]
   Instance :
-    forall X, IsFunction (Δ X) X X.
+    forall X, set_by_replacement (fun x => x) X ⊢⊂ X.
   Proof.
-    Intros X [| [x y₁ y₂ |]].
-    { Rewrite CoupleMembershipEquivalenceProof.proof.
-      Intros H₁ H₂.
-      Rewrite H₁.
-      Rewrite H₂. }
-    { Rewrite Diagonal.first_projectionₑ. }
+    Intros X y.
+    Rewrite MembershipEquivalenceProof.proof.
+    Rewrite Equality.commutativity.
+    Apply Existence.of_equalₑ.
   Qed.
 
   (* application identique *)
-  Definition identical_application X : X → X := Δ X.
+  Definition identical_application X : X → X := x ∈ X ↦ x ∈ X.
 End IdenticalApplication.
+
+Notation Id := identical_application.

@@ -1,10 +1,12 @@
 Require Export
-  Bourbaki.Correspondence.Correspondence.IdenticalCorrespondence
+  Bourbaki.Correspondence.Correspondence.IdenticalApplication
   Bourbaki.Correspondence.Results.Correspondence
+  Bourbaki.Correspondence.Results.Diagonal
   Bourbaki.Correspondence.Results.Graph
-  Bourbaki.Correspondence.Results.Meta.GraphComposite.
+  Bourbaki.Correspondence.Results.Meta.GraphComposite
+  Bourbaki.Correspondence.Term.Correspondence.
 
-Section IdenticalCorrespondence.
+Section IdenticalApplication.
   Context `{Set_.Theory}.
 
   Theorem composite_leftₑ {X Y} (Γ : Correspondence X Y) :
@@ -41,4 +43,12 @@ Section IdenticalCorrespondence.
     Apply MembershipEquivalenceProof.proof.
     Assumption.
   Qed.
-End IdenticalCorrespondence.
+
+  Theorem graphₑ :
+    ⊢ ∀ X, Id X = Δ X.
+  Proof.
+    Rewrite Graph.equalityₑ.
+    Intros X x y.
+    Rewrite CoupleMembershipEquivalenceProof.proof.
+  Qed.
+End IdenticalApplication.
