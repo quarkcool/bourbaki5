@@ -1,7 +1,6 @@
 Require Export
   Bourbaki.Correspondence.Correspondence.IdenticalApplication
   Bourbaki.Correspondence.Results.Correspondence
-  Bourbaki.Correspondence.Results.Diagonal
   Bourbaki.Correspondence.Results.Graph
   Bourbaki.Correspondence.Results.Meta.GraphComposite
   Bourbaki.Correspondence.Term.Correspondence.
@@ -42,13 +41,5 @@ Section IdenticalApplication.
     Apply (Correspondence.first_projection_subset_essence (G := Γ)).
     Apply MembershipEquivalenceProof.proof.
     Assumption.
-  Qed.
-
-  Theorem graphₑ :
-    ⊢ ∀ X, Id X = Δ X.
-  Proof.
-    Rewrite Graph.equalityₑ.
-    Intros X x y.
-    Rewrite CoupleMembershipEquivalenceProof.proof.
   Qed.
 End IdenticalApplication.

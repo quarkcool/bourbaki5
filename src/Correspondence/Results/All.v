@@ -1,8 +1,10 @@
 Require Export
+  Bourbaki.Correspondence.Correspondence.IdenticalApplication
   Bourbaki.Correspondence.Relation.SymmetricGraphEssence
   Bourbaki.Correspondence.Results.Diagonal
+  Bourbaki.Correspondence.Results.FunctionComposite
   Bourbaki.Correspondence.Results.Product
-  Bourbaki.Correspondence.Results.ReverseGraph
+  Bourbaki.Correspondence.Results.ReverseApplication
   Bourbaki.Set.Results.Meta.Emptiness.
 
 Module Diagonal.
@@ -60,6 +62,38 @@ Module Product.
   End Product.
 End Product.
 
+Module ReverseApplication.
+  Section ReverseApplication.
+    Context `{Set_.Theory}.
+
+    Theorem composite_leftₑ {X Y} (f : X → Y) `(!IsBijective f) :
+      ⊢ f⁻¹ ∘ f = Id X.
+    Proof.
+      Apply Application.equality_when_same_domainₑ.
+      Intros x H₁.
+      Rewrite ValueEqualityProof.proof.
+      Symmetry.
+      assert (H₄ : ⊢ f x ∈ Y). {
+        Apply (Correspondence.second_projection_subset_essence (G := f)).
+        Apply Value.element_essence.
+      }
+      Apply Value.as_equalₑ.
+      Apply CoupleMembershipEquivalenceProof.proof; Change (⊢ _ ∈ _).
+      Apply Value.value_essence.
+    Qed.
+
+    Theorem composite_rightₑ {X Y} (f : X → Y) `(!IsBijective f) :
+      ⊢ f ∘ f⁻¹ = Id Y.
+    Proof.
+      Apply Application.equality_when_same_domainₑ.
+      Intros y H₁.
+      Rewrite ValueEqualityProof.proof.
+      Apply ReverseApplication.value_passed_to_reversed_application.
+      Assumption.
+    Qed.
+  End ReverseApplication.
+End ReverseApplication.
+
 Module Other.
   Section Other.
     Context `{Set_.Theory}.
@@ -81,5 +115,66 @@ Module Other.
       Intros X Y H₁.
       Rewrite H₁.
     Qed.
+
+    Lemma Exa_E_II_3_7__6 {X Y} (f : X → Y) :
+      ⊢ is_surjective (x ∈ X ↦ f x).
+    Proof.
+      unfold is_surjective.
+      Rewrite Image.of_starting_set.
+      Apply TermFunction.second_projectionₑ.
+    Qed.
   End Other.
+
+  Section Exa_E_II_3_7__5.
+    Context `{Set_.Theory}.
+
+    Instance :
+      forall y X, set_by_replacement (fun x => ❨x, y❩) X ⊢⊂ X × {y,}.
+    Proof.
+      Change (forall y X, ⊢ ∀ z, _).
+      Rewrite MembershipEquivalenceProof.proof at 1.
+      Intros y X z [x H₁].
+      Rewrite H₁.
+      Apply CoupleMembershipEquivalenceProof.proof.
+      Intros [|].
+      { Assumption. }
+      { Apply MembershipEquivalenceProof.proof.
+        Reflexivity. }
+    Qed.
+
+    Lemma Exa_E_II_3_7__5_i :
+      ⊢ ∀ X y, is_injective (x ∈ X ↦ ❨x, y❩ ∈ X × {y,}).
+    Proof.
+      Intros X y.
+      Apply Injectivity.alternative_definition.
+      Intros x₁ H₁ x₂ H₂.
+      Rewrite ValueEqualityProof.proof.
+      Rewrite Couple.equalityₑ.
+      Apply Conjunction.elimination_left.
+    Qed.
+
+    Lemma Exa_E_II_3_7__5_ii :
+      ⊢ ∀ X y, is_surjective (x ∈ X ↦ ❨x, y❩ ∈ X × {y,}).
+    Proof.
+      Intros X y.
+      unfold is_surjective.
+      Rewrite Image.of_starting_set.
+      Rewrite TermFunction.second_projectionₑ.
+      Apply Set_.equalityₑ.
+      Intros z.
+      do 2 (Rewrite MembershipEquivalenceProof.proof);
+        Change (⊢ _ ⇔ ∃ x y', _).
+      Rewrite Conjunction.associativity.
+      Rewrite <- (fun _ => Conjunction.commutativity (_ = _)).
+      Rewrite Existence.of_equalₑ.
+    Qed.
+
+    Lemma Exa_E_II_3_7__5_iii :
+      ⊢ ∀ X y, is_bijective (x ∈ X ↦ ❨x, y❩ ∈ X × {y,}).
+    Proof.
+      Intros X y [|].
+      { Apply Exa_E_II_3_7__5.Exa_E_II_3_7__5_i. }
+      { Apply Exa_E_II_3_7__5.Exa_E_II_3_7__5_ii. }
+    Qed.
+  End Exa_E_II_3_7__5.
 End Other.
