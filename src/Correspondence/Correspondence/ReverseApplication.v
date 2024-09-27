@@ -1,7 +1,5 @@
 Require Export
-  Bourbaki.Correspondence.Correspondence.ReverseCorrespondence
   Bourbaki.Correspondence.Relation.Bijectivity
-  Bourbaki.Correspondence.Results.Image
   Bourbaki.Correspondence.Results.Injectivity.
 
 Section ReverseApplication.

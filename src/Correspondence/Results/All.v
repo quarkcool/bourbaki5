@@ -1,11 +1,61 @@
 Require Export
-  Bourbaki.Correspondence.Correspondence.IdenticalApplication
   Bourbaki.Correspondence.Relation.SymmetricGraphEssence
   Bourbaki.Correspondence.Results.Diagonal
-  Bourbaki.Correspondence.Results.FunctionComposite
   Bourbaki.Correspondence.Results.Product
   Bourbaki.Correspondence.Results.ReverseApplication
+  Bourbaki.Correspondence.Results.Surjectivity
   Bourbaki.Set.Results.Meta.Emptiness.
+
+Module RetractionEssence.
+  Section RetractionEssence.
+    Context `{Set_.Theory}.
+
+    Theorem commutativity {Y X} (g : Y → X) (f : X → Y) :
+      ⊢ is_retraction g f ⇔ is_section f g.
+    Proof.
+      Reflexivity.
+    Qed.
+  End RetractionEssence.
+End RetractionEssence.
+
+Module SectionEssence.
+  Section SectionEssence.
+    Context `{Set_.Theory}.
+
+    Theorem commutativity {Y X} (g : Y → X) (f : X → Y) :
+      ⊢ is_section g f ⇔ is_retraction f g.
+    Proof.
+      Reflexivity.
+    Qed.
+  End SectionEssence.
+End SectionEssence.
+
+Module Bijectivity.
+  Section Bijectivity.
+    Context `{Set_.Theory}.
+
+    (* Corr_E_II_3__2 *)
+    Theorem from_retraction_section {Y X} (g : Y → X) (f : X → Y) :
+      ⊢ is_retraction g f ⇒ is_section g f ⇒
+        is_bijective f ∧ is_bijective g ∧ g = f⁻¹.
+    Proof.
+      Intros H₁ H₂ [[|] | [[|] |]].
+      { Apply (Injectivity.from_retraction g).
+        Assumption. }
+      { Apply (Surjectivity.from_section g).
+        Assumption. }
+      { Apply (Injectivity.from_retraction f).
+        Apply RetractionEssence.commutativity.
+        Assumption. }
+      { Apply (Surjectivity.from_section f).
+        Apply SectionEssence.commutativity.
+        Assumption. }
+      { Apply Application.equality_when_same_domainₑ.
+        Intros y H₃.
+        admit. }
+    Qed.
+  End Bijectivity.
+End Bijectivity.
 
 Module Diagonal.
   Section Diagonal.

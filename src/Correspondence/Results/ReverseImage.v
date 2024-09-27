@@ -1,8 +1,6 @@
 Require Export
   Bourbaki.Correspondence.Relation.Surjectivity
-  Bourbaki.Correspondence.Results.Image
-  Bourbaki.Correspondence.Results.Injectivity
-  Bourbaki.Correspondence.Results.ReverseGraph.
+  Bourbaki.Correspondence.Results.Injectivity.
 
 Section ReverseImage.
   Context `{Set_.Theory}.

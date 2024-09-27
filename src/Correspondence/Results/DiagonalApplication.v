@@ -1,7 +1,6 @@
 Require Export
   Bourbaki.Correspondence.Correspondence.DiagonalApplication
-  Bourbaki.Correspondence.Results.Injectivity
-  Bourbaki.Correspondence.Results.TermFunction.
+  Bourbaki.Correspondence.Results.Injectivity.
 
 Section DiagonalApplication.
   Context `{Set_.Theory}.

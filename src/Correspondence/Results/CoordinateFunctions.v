@@ -1,9 +1,7 @@
 Require Export
   Bourbaki.Correspondence.Correspondence.CoordinateFunctions
   Bourbaki.Correspondence.Relation.Surjectivity
-  Bourbaki.Correspondence.Results.Image
-  Bourbaki.Correspondence.Results.Injectivity
-  Bourbaki.Correspondence.Results.TermFunction.
+  Bourbaki.Correspondence.Results.Injectivity.
 
 Section CoordinateFunctions.
   Context `{Set_.Theory}.

@@ -1,10 +1,8 @@
 Require Export
   Bourbaki.Correspondence.Correspondence.CanonicalBijection
   Bourbaki.Correspondence.Relation.Bijectivity
-  Bourbaki.Correspondence.Results.Image
   Bourbaki.Correspondence.Results.Injectivity
-  Bourbaki.Correspondence.Results.RelationGraph
-  Bourbaki.Correspondence.Results.TermFunction.
+  Bourbaki.Correspondence.Results.RelationGraph.
 
 Section CanonicalBijection.
   Context `{Set_.Theory}.
